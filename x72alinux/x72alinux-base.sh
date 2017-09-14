@@ -29,24 +29,24 @@ scriptPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #
 
 # ##################################################
-txttitle="X Arch Linux的安装程序"
-txtpresstocontinue="请按任意按键再继续，或按 Ctrl+c 退出......"
+txttitle="Arch Linux Install Script"
+txtpresstocontinue="Press any key to continue, or press Ctrl+C to exit......"
 txtinvalidoption="输入错误，请重新输入"
 
-txtinfochkroot="检测用户权限......"
-txtrootinfo="root 已登录......"
-txtrootwarning="请用 root 登录并重试！"
+txtinfochkroot="Check user's authority......"
+txtrootinfo="User root login."
+txtrootwarning="Please login as root and try again."
 
-txtinfochkconnection="检测网络连接......"
-txtconnectionwarning="请先连接网络再重试！"
-txtconnectioninfo="网络连接良好！"
+txtinfochkconnection="Check network connection......"
+txtconnectionwarning="Please connect to internet and try again."
+txtconnectioninfo="Internet is connected"
 
-txtinfochkbootmode="检测启动模式......"
+txtinfochkbootmode="Check boot mode......"
 txtuefi="UEFI"
 txtbios="BIOS"
 
-txtinfoupdatetime="更新当前系统时间......"
-txtinfosetupsys="更新系统设置......"
+txtinfoupdatetime="Update system date and time."
+txtinfosetupsys="Update system setting."
 
 # ##################################################
 countries_code=("AU" "CN")
@@ -322,7 +322,7 @@ cfg_partition(){
   # BIOS+GPT
   if [[ bootflag == "BIOS" ]]
   then
-      # BIOS 启动分区 (BIOS boot paartition) 是在数据存储设备上的一个分区，它是被
+      # BIOS 启动分区 (BIOS boot partition) 是在数据存储设备上的一个分区，它是被
       #   GNU GRUB 用于在传统BIOS主板的个人电脑上启动操作系统，而被启动的存储设备则需要包含
       #   一个 GPT 分区表。所以这种分区布局设计又被称为 BIOS/GPT 启动
       # 第一个分区 设置 bios_grub 代码 EF02
@@ -385,29 +385,28 @@ function mainScript() {
 ####################################################
 
 print_title "${txttitle}"
-print_info "${txttitle} 是我写的，但是你可以随便用随便改。"
 presstocontinue
 
-set_lang
-chk_root
+# set_lang
+# chk_root
 chk_connetion
 chk_bootmode
 upd_time
 
 print_info "更新系统......"
-# pacman -Sy
+pacman -Sy
 
 # set_keymap
 # set_editor
 # set_sys
-# cfg_mirrorlist
-# cfg_partition
-# ins_system
-# cfg_fstab
-# cfg_hostname
-# cfg_timezone
-# cfg_hwclock
-# cfg_locale
+cfg_mirrorlist
+cfg_partition
+ins_system
+cfg_fstab
+cfg_hostname
+cfg_timezone
+cfg_hwclock
+cfg_locale
 # cfg_mkinitcpio
 # ins_bootloader
 # set_rootpw
