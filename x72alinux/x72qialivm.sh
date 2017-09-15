@@ -38,6 +38,7 @@ echo "To make sure system clock is accurate"
 timedatectl set-ntp true
 timedatectl status
 f_ptc
+
 #----------------------------------------------------------
 ### Partitioning
 
@@ -45,16 +46,16 @@ clear
 echo "Start Partitioning!"
 # make partitions on the disk.
 # MBR partition table
-parted -s /dev/sda mklabel gpt
+parted /dev/sda mklabel msdos
 # /boot - 512m
-parted -s /dev/sda mkpart ESP fat32 1MiB 513MiB
-parted -s set 1 boot on
+parted /dev/sda mkpart primary ext3 1MiB 513MiB
+parted /dev/sda set 1 boot on
 # / (root) - 20g
-parted -s /dev/sda mkpart primary 513MiB 20993MiB
+parted /dev/sda mkpart primary ext3 513MiB 20GiB
 # swap - 2g
-parted -s /dev/sda mkpart primary linux-swap 20993MiB 23089MiB
+parted /dev/sda mkpart primary linux-swap 20GiB 22GiB
 # /home - the rest
-parted -s /dev/sda mkpart primary 23089MiB 100%
+parted /dev/sda mkpart primary ext3 22GiB 100%
 
 echo "Partition Finished!"
 f_ptc
