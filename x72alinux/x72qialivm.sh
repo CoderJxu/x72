@@ -135,7 +135,7 @@ cat /mnt/etc/fstab
 f_ptc
 
 # copy ranked mirrorlist over
-cp /etc/pacman.d/mirrorlist* /mnt/etc/pacman.d
+cp /etc/pacman.d/mirrorlist* /mnt/etc/pacman.d/
 
 # chroot
 clear
