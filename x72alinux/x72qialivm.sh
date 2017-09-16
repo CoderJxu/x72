@@ -4,7 +4,6 @@
 # curl -L http://bit.ly/2x0Wons >x72alinstall.sh
 
 f_ptc(){
-  sleep 2
   read -e -sn 1 -p "Press any key to continue..."
 }
 
