@@ -14,7 +14,7 @@ f_ptc(){
 #----------------------------------------------------------
 clear
 echo "Pre-installation - Verify the boot mode"
-if [[ -d "/sys/firmware/efi/"]]; then
+if [[ -d "/sys/firmware/efi/" ]]; then
   echo "The system is booted in UEFI mode"
 else
   echo "The system is booted in BIOS or CSM mode"
@@ -94,7 +94,10 @@ echo "Pre-installation - Mount the file systems"
 # set up /mnt
 mount /dev/sda4 /mnt
 mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
+mount /dev/sda2 /mnt/boot
+
+echo "Pre-installation - Result check"
+lsblk
 f_ptc
 
 #----------------------------------------------------------
@@ -102,8 +105,13 @@ f_ptc
 # rankmirrors to make this faster (though it takes a while)
 clear
 echo "Installation - Select the mirrors"
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig >/etc/pacman.d/mirrorlist
+# mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
+# rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig >/etc/pacman.d/mirrorlist
+
+pacman -S reflector rsync
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+reflector --verbose --country 'Australia' -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+
 pacman -Syy
 f_ptc
 
@@ -111,6 +119,9 @@ f_ptc
 # install base packages (take a coffee break if you have slow internet)
 clear
 echo "Installation - Install the base packages"
+dirmngr </dev/null
+pacman-key --populate archlinux
+pacman-key --refresh-keys
 pacstrap /mnt base base-devel
 f_ptc
 
