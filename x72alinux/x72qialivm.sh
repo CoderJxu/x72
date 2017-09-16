@@ -104,6 +104,8 @@ f_ptc
 # rankmirrors to make this faster (though it takes a while)
 clear
 echo "Installation - Select the mirrors"
+pacman -Syy
+
 # mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
 # rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig >/etc/pacman.d/mirrorlist
 
@@ -111,7 +113,6 @@ pacman -S reflector rsync
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 reflector --verbose --country 'Australia' -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 
-pacman -Syy
 f_ptc
 
 #----------------------------------------------------------
