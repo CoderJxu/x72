@@ -295,74 +295,88 @@ PreInsInt
 PreInsRootChk
 PreInsClk
 
-read -e -sn 1 key -p "Whether to partition the disk and format? \nY(default)/N"
+echo "Whether to partition the disk and format? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   PreInsBiosGptGrub
 fi
 
 PreInsDiskChk
 
-read -e -sn 1 key -p "Whether to rank the mirror list of live system? \nY(default)/N"
+echo "Whether to rank the mirror list of live system? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   InsMirrorList
 fi
 
-read -e -sn 1 key -p "Whether to install the packages of system base? \nY(default)/N"
+echo "Whether to install the packages of system base? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   InsBase
 fi
 
-read -e -sn 1 key -p "Whether to configure the fstab? \nY(default)/N"
+echo "Whether to configure the fstab? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgFstab
 fi
 
-read -e -sn 1 key -p "Whether to rank the mirror list of the new system? \nY(default)/N"
+echo "Whether to rank the mirror list of the new system? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgMirrorList
 fi
 
-read -e -sn 1 key -p "Whether to configure the time zone? \nY(default)/N"
+echo "Whether to configure the time zone? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgTimeZ
 fi
 
-read -e -sn 1 key -p "Whether to configure the locale? \nY(default)/N"
+echo "Whether to configure the locale? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgLocale
 fi
 
-read -e -sn 1 key -p "Whether to configure the host? \nY(default)/N"
+echo "Whether to configure the host? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgHost
 fi
 
-read -e -sn 1 key -p "Whether to configure the network? \nY(default)/N"
+echo "Whether to configure the network? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgNetwork
 fi
 
-read -e -sn 1 key -p "Whether to configure the Initramfs? \nY(default)/N"
+echo "Whether to configure the Initramfs? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgInitramfs
 fi
 
-read -e -sn 1 key -p "Whether to configure the root password? \nY(default)/N"
+echo "Whether to configure the root password? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgRootPw
 fi
 
-read -e -sn 1 key -p "Whether to configure the intel-ucode? \nY(default)/N"
+echo "Whether to configure the intel-ucode? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgIntelCPU
 fi
 
-read -e -sn 1 key -p "Whether to configure the boot loader? \nY(default)/N"
+echo "Whether to configure the boot loader? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgBootLoader
 fi
 
-read -e -sn 1 key -p "Whether to install common packages? \nY(default)/N"
+echo "Whether to install common packages? \nY(default)/N"
+read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgPkgIns
 fi
