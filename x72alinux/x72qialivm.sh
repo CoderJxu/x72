@@ -139,7 +139,7 @@ InsMirrorList(){
   # mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
   # rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig >/etc/pacman.d/mirrorlist
 
-  pacman -S reflector rsync
+  pacman -S --noconfirm reflector rsync
   mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
   reflector --verbose --country 'Australia' -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 
@@ -154,7 +154,6 @@ InsBase(){
   pacman-key --refresh-keys
   pacstrap /mnt base base-devel
 }
-
 
 #----------------------------------------------------------
 ### Configure the system
@@ -171,7 +170,7 @@ CfgMirrorList(){
 
 arch-chroot /mnt /bin/bash <<EOF
 pacman -Syy
-pacman -S reflector rsync
+pacman -S --noconfirm reflector rsync
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 reflector --verbose --country 'Australia' -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 EOF
@@ -184,7 +183,7 @@ CfgTimeZ(){
 
 arch-chroot /mnt /bin/bash <<EOF
 # set initial timezone to Australia/Sydney
-ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime
+ln -sf /usr/share/zoneinfo/Australia/Sydney /etc/localtime
 # adjust the time skew, and set the time standard to UTC
 hwclock --systohc --utc
 EOF
@@ -221,7 +220,7 @@ CfgNetwork(){
   echo "Configure the system - chroot - Network configuration"
 
 arch-chroot /mnt /bin/bash <<EOF
-pacman -S networkmanager iw wpa_supplicant dialog
+pacman -S --noconfirm networkmanager iw wpa_supplicant dialog
 systemctl enable NetworkManager.service
 EOF
 
@@ -253,7 +252,7 @@ CfgIntelCPU(){
   if [[ $(less /proc/cpuinfo | grep GenuineIntel | awk '{print $3}') == "GenuineIntel" ]]; then
 
 arch-chroot /mnt /bin/bash <<EOF
-pacman -S intel-ucode
+pacman -S --noconfirm intel-ucode
 EOF
 
   fi
@@ -263,7 +262,7 @@ CfgBootLoader(){
   echo "Configure the system - chroot - Boot loader"
 
 arch-chroot /mnt /bin/bash <<EOF
-pacman -S grub os-prober
+pacman -S --noconfirm grub os-prober
 grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
@@ -274,7 +273,7 @@ CfgPkgIns(){
   echo "Configure the system - chroot - packages installation"
 
 arch-chroot /mnt /bin/bash <<EOF
-pacman -S screen screenfetch wpa_actiond ifplugd sudo zsh
+pacman -S --noconfirm screen screenfetch wpa_actiond ifplugd sudo zsh
 EOF
 
 }
@@ -295,7 +294,7 @@ PreInsInt
 PreInsRootChk
 PreInsClk
 
-echo "Whether to partition the disk and format? \nY(default)/N"
+echo -e "Whether to partition the disk and format? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   PreInsBiosGptGrub
@@ -303,79 +302,79 @@ fi
 
 PreInsDiskChk
 
-echo "Whether to rank the mirror list of live system? \nY(default)/N"
+echo -e "Whether to rank the mirror list of live system? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   InsMirrorList
 fi
 
-echo "Whether to install the packages of system base? \nY(default)/N"
+echo -e "Whether to install the packages of system base? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   InsBase
 fi
 
-echo "Whether to configure the fstab? \nY(default)/N"
+echo -e "Whether to configure the fstab? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgFstab
 fi
 
-echo "Whether to rank the mirror list of the new system? \nY(default)/N"
+echo -e "Whether to rank the mirror list of the new system? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgMirrorList
 fi
 
-echo "Whether to configure the time zone? \nY(default)/N"
+echo -e "Whether to configure the time zone? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgTimeZ
 fi
 
-echo "Whether to configure the locale? \nY(default)/N"
+echo -e "Whether to configure the locale? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgLocale
 fi
 
-echo "Whether to configure the host? \nY(default)/N"
+echo -e "Whether to configure the host? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgHost
 fi
 
-echo "Whether to configure the network? \nY(default)/N"
+echo -e "Whether to configure the network? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgNetwork
 fi
 
-echo "Whether to configure the Initramfs? \nY(default)/N"
+echo -e "Whether to configure the Initramfs? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgInitramfs
 fi
 
-echo "Whether to configure the root password? \nY(default)/N"
+echo -e "Whether to configure the root password? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgRootPw
 fi
 
-echo "Whether to configure the intel-ucode? \nY(default)/N"
+echo -e "Whether to configure the intel-ucode? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgIntelCPU
 fi
 
-echo "Whether to configure the boot loader? \nY(default)/N"
+echo -e "Whether to configure the boot loader? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgBootLoader
 fi
 
-echo "Whether to install common packages? \nY(default)/N"
+echo -e "Whether to install common packages? \nY(default)/N"
 read -e -sn 1 key
 if [[ $key != "N" || $key != "n" ]]; then
   CfgPkgIns
